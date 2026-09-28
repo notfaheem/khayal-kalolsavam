@@ -12,31 +12,38 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const ADMIN_SECRET = process.env.ADMIN_SECRET || 'khayal-kalolsavam-secret-key-2026';
 
-// Active admin tokens (in-memory token store with 12 hour expiry)
-const activeTokens = new Map();
+const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+const uploadDir = isServerless ? path.join('/tmp', 'uploads', 'results') : path.join(__dirname, 'uploads', 'results');
+if (!fs.existsSync(uploadDir)) {
+  try { fs.mkdirSync(uploadDir, { recursive: true }); } catch (e) {}
+}
 
+// Stateless cryptographic admin JWT token using HMAC-SHA256 (works across all serverless lambda instances)
 function generateToken() {
-  const token = crypto.randomBytes(32).toString('hex');
-  const expiresAt = Date.now() + (12 * 60 * 60 * 1000); // 12 hours
-  activeTokens.set(token, expiresAt);
-  return token;
+  const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
+  const payload = Buffer.from(JSON.stringify({
+    role: 'admin',
+    iat: Date.now(),
+    exp: Date.now() + (7 * 24 * 60 * 60 * 1000) // Valid for 7 days
+  })).toString('base64url');
+  const signature = crypto.createHmac('sha256', ADMIN_SECRET).update(`${header}.${payload}`).digest('base64url');
+  return `${header}.${payload}.${signature}`;
 }
 
 function isValidToken(token) {
-  if (!token) return false;
-  const expiresAt = activeTokens.get(token);
-  if (!expiresAt) return false;
-  if (Date.now() > expiresAt) {
-    activeTokens.delete(token);
+  if (!token || typeof token !== 'string') return false;
+  const parts = token.split('.');
+  if (parts.length !== 3) return false;
+  const [header, payload, signature] = parts;
+  const expectedSignature = crypto.createHmac('sha256', ADMIN_SECRET).update(`${header}.${payload}`).digest('base64url');
+  if (signature !== expectedSignature) return false;
+  try {
+    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf-8'));
+    if (data.exp && Date.now() > data.exp) return false;
+    return data.role === 'admin';
+  } catch (e) {
     return false;
   }
-  return true;
-}
-
-// Ensure required directories exist
-const uploadDir = path.join(__dirname, 'uploads', 'results');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 // Multer Storage Configuration
@@ -181,11 +188,6 @@ app.post('/api/admin/change-password', requireAdmin, (req, res) => {
 
 // Admin Logout
 app.post('/api/admin/logout', requireAdmin, (req, res) => {
-  const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : req.headers['x-admin-token'];
-  if (token) {
-    activeTokens.delete(token);
-  }
   res.json({ success: true, message: 'Logged out successfully' });
 });
 

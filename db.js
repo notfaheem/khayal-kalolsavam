@@ -3,7 +3,10 @@ const path = require('path');
 const crypto = require('crypto');
 const defaultItems = require('./data/defaultItems');
 
-const DB_PATH = path.join(__dirname, 'data', 'database.json');
+const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+const DATA_DIR = isServerless ? path.join('/tmp', 'data') : path.join(__dirname, 'data');
+const DB_PATH = path.join(DATA_DIR, 'database.json');
+const BUNDLED_DB_PATH = path.join(__dirname, 'data', 'database.json');
 
 // Helper to hash password
 function hashPassword(password) {
@@ -29,34 +32,61 @@ class Database {
   }
 
   init() {
-    if (!fs.existsSync(DB_PATH)) {
-      this.data.items = JSON.parse(JSON.stringify(defaultItems));
-      this.save();
-      console.log('Initialized new database with default 38 items.');
-    } else {
+    if (!fs.existsSync(DATA_DIR)) {
+      try { fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {}
+    }
+
+    // Try reading existing DB file
+    if (fs.existsSync(DB_PATH)) {
       try {
         const fileContent = fs.readFileSync(DB_PATH, 'utf-8');
         this.data = JSON.parse(fileContent);
-        // Fallback check if items array is missing
         if (!this.data.items || !Array.isArray(this.data.items)) {
           this.data.items = JSON.parse(JSON.stringify(defaultItems));
           this.save();
         }
+        return;
       } catch (err) {
-        console.error('Error reading database, creating fresh backup and reset:', err);
-        this.data.items = JSON.parse(JSON.stringify(defaultItems));
-        this.save();
+        console.error('Error reading primary database:', err);
       }
     }
+
+    // If on serverless and bundled database.json exists, copy from bundle
+    if (fs.existsSync(BUNDLED_DB_PATH)) {
+      try {
+        const bundledContent = fs.readFileSync(BUNDLED_DB_PATH, 'utf-8');
+        this.data = JSON.parse(bundledContent);
+        this.save();
+        return;
+      } catch (err) {
+        console.error('Error reading bundled database:', err);
+      }
+    }
+
+    // Default initialization
+    this.data.items = JSON.parse(JSON.stringify(defaultItems));
+    this.save();
+    console.log('Initialized new database with default items.');
   }
 
   save() {
     try {
+      if (!fs.existsSync(DATA_DIR)) {
+        try { fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {}
+      }
       const tempPath = `${DB_PATH}.tmp`;
       fs.writeFileSync(tempPath, JSON.stringify(this.data, null, 2), 'utf-8');
       fs.renameSync(tempPath, DB_PATH);
     } catch (err) {
-      console.error('Error saving database:', err);
+      console.error('Error saving database to primary path:', err.message);
+      // Fallback to /tmp if primary failed (read-only filesystem)
+      if (!isServerless) {
+        try {
+          const fallbackDir = path.join('/tmp', 'data');
+          if (!fs.existsSync(fallbackDir)) fs.mkdirSync(fallbackDir, { recursive: true });
+          fs.writeFileSync(path.join(fallbackDir, 'database.json'), JSON.stringify(this.data, null, 2), 'utf-8');
+        } catch (e) {}
+      }
     }
   }
 
