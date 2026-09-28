@@ -65,6 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const newPasswordInput = document.getElementById('new-password');
   const resetDefaultsBtn = document.getElementById('reset-defaults-btn');
   const backupBtn = document.getElementById('backup-btn');
+  const uploadBackupTriggerBtn = document.getElementById('upload-backup-trigger-btn');
+  const backupFileInput = document.getElementById('backup-file-input');
 
   // Toasts
   const toastContainer = document.getElementById('toast-container');
@@ -614,6 +616,59 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Backup download failed', 'error');
     }
   });
+
+  // Upload & Restore Backup
+  if (uploadBackupTriggerBtn && backupFileInput) {
+    uploadBackupTriggerBtn.addEventListener('click', () => {
+      backupFileInput.value = '';
+      backupFileInput.click();
+    });
+
+    backupFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!file.name.toLowerCase().endsWith('.json') && file.type !== 'application/json') {
+        showToast('Please select a valid JSON backup file.', 'error');
+        return;
+      }
+
+      if (!confirm(`Are you sure you want to restore the database from "${file.name}"?\nThis will update items with the data from this backup file.`)) {
+        backupFileInput.value = '';
+        return;
+      }
+
+      try {
+        const text = await file.text();
+        const backupJson = JSON.parse(text);
+
+        showToast('Restoring backup, please wait...', 'info');
+
+        const res = await fetch('/api/admin/import', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify(backupJson)
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message || 'Backup restored successfully!', 'success');
+          closeSettingsModal();
+          loadAdminStats();
+          loadAdminItems();
+        } else {
+          showToast(data.error || 'Failed to restore backup.', 'error');
+        }
+      } catch (err) {
+        showToast('Error reading or restoring backup file: ' + err.message, 'error');
+      } finally {
+        backupFileInput.value = '';
+      }
+    });
+  }
 
   // Reset to Defaults
   resetDefaultsBtn.addEventListener('click', async () => {

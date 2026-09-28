@@ -289,6 +289,40 @@ class Database {
     this.save();
     return this.data.items;
   }
+
+  restoreBackup(backupData) {
+    if (!backupData || typeof backupData !== 'object') {
+      throw new Error('Invalid backup file format: Expected JSON object.');
+    }
+
+    let itemsToRestore = null;
+    if (Array.isArray(backupData.items)) {
+      itemsToRestore = backupData.items;
+    } else if (Array.isArray(backupData)) {
+      itemsToRestore = backupData;
+    } else {
+      throw new Error('Invalid backup file: Could not find "items" array.');
+    }
+
+    // Basic structure check
+    for (const item of itemsToRestore) {
+      if (!item.itemCode || !item.itemName) {
+        throw new Error('Invalid backup content: Each item must contain itemCode and itemName.');
+      }
+    }
+
+    this.data.items = JSON.parse(JSON.stringify(itemsToRestore));
+
+    if (backupData.config && typeof backupData.config === 'object') {
+      this.data.config = { ...this.data.config, ...backupData.config };
+    }
+
+    this.save();
+    return {
+      restoredCount: this.data.items.length,
+      stats: this.getStats()
+    };
+  }
 }
 
 module.exports = new Database();

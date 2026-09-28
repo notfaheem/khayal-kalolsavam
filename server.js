@@ -316,6 +316,24 @@ app.get('/api/admin/export', requireAdmin, (req, res) => {
   res.send(JSON.stringify(db.data, null, 2));
 });
 
+// Import / Restore Database JSON Backup
+app.post('/api/admin/import', requireAdmin, (req, res) => {
+  try {
+    const backupData = req.body;
+    if (!backupData || Object.keys(backupData).length === 0) {
+      return res.status(400).json({ success: false, error: 'No backup data received in request.' });
+    }
+    const result = db.restoreBackup(backupData);
+    res.json({
+      success: true,
+      message: `Successfully restored ${result.restoredCount} items from backup!`,
+      data: result.stats
+    });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
 // Admin page route
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
