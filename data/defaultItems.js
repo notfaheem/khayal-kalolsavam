@@ -1,0 +1,425 @@
+const defaultItems = [
+  // HS-Arabic
+  {
+    id: "item_703",
+    itemCode: "703",
+    itemName: "Caption Rachana",
+    itemNameMl: "ക്യാപ്ഷൻ രചന",
+    category: "HS Arabic",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_704",
+    itemCode: "704",
+    itemName: "Tharjama ( Arabic)",
+    itemNameMl: "തർജമ (അറബിക്)",
+    category: "HS Arabic",
+    participants: 2,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_705",
+    itemCode: "705",
+    itemName: "Poster Nirmanam",
+    itemNameMl: "പോസ്റ്റർ നിർമ്മാണം",
+    category: "HS Arabic",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_706",
+    itemCode: "706",
+    itemName: "Padyam Chollal (Boys)",
+    itemNameMl: "പദ്യം ചൊല്ലൽ (ആൺ)",
+    category: "HS Arabic",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_707",
+    itemCode: "707",
+    itemName: "Padyam Chollal(Girls)",
+    itemNameMl: "പദ്യം ചൊല്ലൽ (പെൺ)",
+    category: "HS Arabic",
+    participants: 2,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_708",
+    itemCode: "708",
+    itemName: "Arabi Ganam (Boys)",
+    itemNameMl: "അറബി ഗാനം (ആൺ)",
+    category: "HS Arabic",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_709",
+    itemCode: "709",
+    itemName: "Arabi Ganam (Girls)",
+    itemNameMl: "അറബി ഗാനം (പെൺ)",
+    category: "HS Arabic",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_711",
+    itemCode: "711",
+    itemName: "Mono Act",
+    itemNameMl: "മോണോ ആക്ട്",
+    category: "HS Arabic",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_713",
+    itemCode: "713",
+    itemName: "Quran Parayanam",
+    itemNameMl: "ഖുർആൻ പാരായണം",
+    category: "HS Arabic",
+    participants: 5,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_716",
+    itemCode: "716",
+    itemName: "Nikhandu Nirmanam",
+    itemNameMl: "നിഘണ്ടു നിർമ്മാണം",
+    category: "HS Arabic",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_718",
+    itemCode: "718",
+    itemName: "Sangha Ganam",
+    itemNameMl: "സംഘഗാനം",
+    category: "HS Arabic",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+
+  // HS-General
+  {
+    id: "item_601",
+    itemCode: "601",
+    itemName: "Chithra Rachana - Pencil",
+    itemNameMl: "ചിത്രരചന - പെൻസിൽ",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_602",
+    itemCode: "602",
+    itemName: "Chithra Rachana - Water Colour",
+    itemNameMl: "ചിത്രരചന - ജലച്ചായം",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_604",
+    itemCode: "604",
+    itemName: "Cartoon",
+    itemNameMl: "കാർട്ടൂൺ",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_610",
+    itemCode: "610",
+    itemName: "Lalithaganam (Girls)",
+    itemNameMl: "ലളിതഗാനം (പെൺ)",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_612",
+    itemCode: "612",
+    itemName: "Mappilappattu (Girls)",
+    itemNameMl: "മാപ്പിളപ്പാട്ട് (പെൺ)",
+    category: "HS General",
+    participants: 5,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_628",
+    itemCode: "628",
+    itemName: "Nadodi Nrutham(Girls)",
+    itemNameMl: "നാടോടി നൃത്തം (പെൺ)",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_631",
+    itemCode: "631",
+    itemName: "Bharathanatyam (Girls)",
+    itemNameMl: "ഭരതനാട്യം (പെൺ)",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_636",
+    itemCode: "636",
+    itemName: "Prasangam - Malayalam",
+    itemNameMl: "പ്രസംഗം - മലയാളം",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_640",
+    itemCode: "640",
+    itemName: "Katharachana - Malayalam",
+    itemNameMl: "കഥാരചന - മലയാളം",
+    category: "HS General",
+    participants: 4,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_643",
+    itemCode: "643",
+    itemName: "Upanyasam - Malayalam",
+    itemNameMl: "ഉപന്യാസം - മലയാളം",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_644",
+    itemCode: "644",
+    itemName: "Upanyasam - English",
+    itemNameMl: "ഉപന്യാസം - ഇംഗ്ലീഷ്",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_649",
+    itemCode: "649",
+    itemName: "Padyam Chollal - Malayalam",
+    itemNameMl: "പദ്യം ചൊല്ലൽ - മലയാളം",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_650",
+    itemCode: "650",
+    itemName: "Padyam Chollal - English",
+    itemNameMl: "പദ്യം ചൊല്ലൽ - ഇംഗ്ലീഷ്",
+    category: "HS General",
+    participants: 2,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_651",
+    itemCode: "651",
+    itemName: "Padyam Chollal - Hindi",
+    itemNameMl: "പദ്യം ചൊല്ലൽ - ഹിന്ദി",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_653",
+    itemCode: "653",
+    itemName: "Padyam Chollal - Urdu",
+    itemNameMl: "പദ്യം ചൊല്ലൽ - ഉറുദു",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_654",
+    itemCode: "654",
+    itemName: "Padyam Chollal - Tamil",
+    itemNameMl: "പദ്യം ചൊല്ലൽ - തമിഴ്",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_667",
+    itemCode: "667",
+    itemName: "Dafmuttu (Boys)",
+    itemNameMl: "ദഫ്മുട്ട് (ആൺ)",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_668",
+    itemCode: "668",
+    itemName: "Margamkali (Girls)",
+    itemNameMl: "മാർഗ്ഗംകളി (പെൺ)",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_669",
+    itemCode: "669",
+    itemName: "Thiruvathirakali (Girls)",
+    itemNameMl: "തിരുവാതിരക്കളി (പെൺ)",
+    category: "HS General",
+    participants: 2,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_670",
+    itemCode: "670",
+    itemName: "Oppana (Girls)",
+    itemNameMl: "ഒപ്പന (പെൺ)",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_687",
+    itemCode: "687",
+    itemName: "Vanchipattu",
+    itemNameMl: "വഞ്ചിപ്പാട്ട്",
+    category: "HS General",
+    participants: 2,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_688",
+    itemCode: "688",
+    itemName: "Nadanpattu",
+    itemNameMl: "നാടൻപാട്ട്",
+    category: "HS General",
+    participants: 2,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_689",
+    itemCode: "689",
+    itemName: "Groupsong Urdu",
+    itemNameMl: "ഗ്രൂപ്പ് സോംഗ് (ഉറുദു)",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_692",
+    itemCode: "692",
+    itemName: "Kavitharachana-English",
+    itemNameMl: "കവിതാരചന - ഇംഗ്ലീഷ്",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_695",
+    itemCode: "695",
+    itemName: "Katha Rachana - English",
+    itemNameMl: "കഥാരചന - ഇംഗ്ലീഷ്",
+    category: "HS General",
+    participants: 3,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_697",
+    itemCode: "697",
+    itemName: "Group Song",
+    itemNameMl: "സംഘഗാനം",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  },
+  {
+    id: "item_1017",
+    itemCode: "1017",
+    itemName: "Paliya Nirtham",
+    itemNameMl: "പാലിയ നൃത്തം",
+    category: "HS General",
+    participants: 1,
+    hasResult: false,
+    resultPdf: null,
+    publishedAt: null
+  }
+];
+
+module.exports = defaultItems;
