@@ -68,6 +68,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const uploadBackupTriggerBtn = document.getElementById('upload-backup-trigger-btn');
   const backupFileInput = document.getElementById('backup-file-input');
 
+  // Bulk Upload Elements
+  const openBulkUploadBtn = document.getElementById('open-bulk-upload-modal-btn');
+  const bulkUploadModal = document.getElementById('bulk-upload-modal');
+  const bulkUploadModalCloseBtn = document.getElementById('bulk-upload-modal-close-btn');
+  const bulkUploadModalCancelBtn = document.getElementById('bulk-upload-modal-cancel-btn');
+  const bulkUploadForm = document.getElementById('bulk-upload-form');
+  const bulkFileDropzone = document.getElementById('bulk-file-dropzone');
+  const bulkPdfFilesInput = document.getElementById('bulk-pdf-files-input');
+  const bulkPreviewContainer = document.getElementById('bulk-preview-container');
+  const bulkSelectionSummary = document.getElementById('bulk-selection-summary');
+  const bulkFilesList = document.getElementById('bulk-files-list');
+  const bulkClearFilesBtn = document.getElementById('bulk-clear-files-btn');
+  const bulkUploadSubmitBtn = document.getElementById('bulk-upload-submit-btn');
+  const bulkUploadResultReport = document.getElementById('bulk-upload-result-report');
+
+  let selectedBulkFiles = [];
+
   // Toasts
   const toastContainer = document.getElementById('toast-container');
 
@@ -550,6 +567,271 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // --- BULK UPLOAD MODAL & LOGIC ---
+  if (openBulkUploadBtn) {
+    openBulkUploadBtn.addEventListener('click', () => {
+      openBulkUploadModal();
+    });
+  }
+
+  function openBulkUploadModal() {
+    selectedBulkFiles = [];
+    if (bulkPdfFilesInput) bulkPdfFilesInput.value = '';
+    if (bulkPreviewContainer) bulkPreviewContainer.style.display = 'none';
+    if (bulkUploadResultReport) {
+      bulkUploadResultReport.style.display = 'none';
+      bulkUploadResultReport.innerHTML = '';
+    }
+    if (bulkUploadSubmitBtn) {
+      bulkUploadSubmitBtn.disabled = true;
+      bulkUploadSubmitBtn.onclick = null;
+      bulkUploadSubmitBtn.innerHTML = '<span>Upload &amp; Link Results</span>';
+    }
+    bulkUploadModal.classList.add('active');
+  }
+
+  function closeBulkUploadModal() {
+    bulkUploadModal.classList.remove('active');
+    selectedBulkFiles = [];
+    if (bulkPdfFilesInput) bulkPdfFilesInput.value = '';
+  }
+
+  if (bulkUploadModalCloseBtn) bulkUploadModalCloseBtn.addEventListener('click', closeBulkUploadModal);
+  if (bulkUploadModalCancelBtn) bulkUploadModalCancelBtn.addEventListener('click', closeBulkUploadModal);
+
+  if (bulkFileDropzone) {
+    bulkFileDropzone.addEventListener('click', () => {
+      bulkPdfFilesInput.click();
+    });
+
+    bulkFileDropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      bulkFileDropzone.classList.add('dragover');
+    });
+
+    bulkFileDropzone.addEventListener('dragleave', () => {
+      bulkFileDropzone.classList.remove('dragover');
+    });
+
+    bulkFileDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      bulkFileDropzone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        addBulkFiles(Array.from(e.dataTransfer.files));
+      }
+    });
+  }
+
+  if (bulkPdfFilesInput) {
+    bulkPdfFilesInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        addBulkFiles(Array.from(e.target.files));
+      }
+    });
+  }
+
+  if (bulkClearFilesBtn) {
+    bulkClearFilesBtn.addEventListener('click', () => {
+      selectedBulkFiles = [];
+      bulkPdfFilesInput.value = '';
+      updateBulkPreview();
+    });
+  }
+
+  function addBulkFiles(files) {
+    let pdfCount = 0;
+    files.forEach(file => {
+      const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+      if (isPdf) {
+        // Prevent duplicate file names in selection
+        if (!selectedBulkFiles.some(f => f.name === file.name)) {
+          selectedBulkFiles.push(file);
+          pdfCount++;
+        }
+      }
+    });
+
+    if (pdfCount === 0 && files.length > 0) {
+      showToast('Only PDF files (.pdf) are supported.', 'error');
+    }
+
+    updateBulkPreview();
+  }
+
+  // Matching helper function
+  function findMatchingItem(filename) {
+    if (!filename || !itemsList || itemsList.length === 0) return null;
+    const base = filename.replace(/\.pdf$/i, '').trim();
+
+    // 1. Exact match with itemCode
+    let item = itemsList.find(i => String(i.itemCode).trim().toLowerCase() === base.toLowerCase());
+    if (item) return item;
+
+    // 2. Starts with digits (e.g. 601_Chithra, 601-pencil)
+    const leadingDigits = base.match(/^(\d+)/);
+    if (leadingDigits) {
+      item = itemsList.find(i => String(i.itemCode).trim() === leadingDigits[1]);
+      if (item) return item;
+    }
+
+    // 3. Contains pattern like item_601, code601, #601
+    const prefixMatch = base.match(/(?:item|code|#)[_\-\s]*(\d+)/i);
+    if (prefixMatch) {
+      item = itemsList.find(i => String(i.itemCode).trim() === prefixMatch[1]);
+      if (item) return item;
+    }
+
+    // 4. Any numbers group in filename that matches an item code
+    const allNums = base.match(/\d+/g);
+    if (allNums) {
+      for (const num of allNums) {
+        item = itemsList.find(i => String(i.itemCode).trim() === num);
+        if (item) return item;
+      }
+    }
+
+    return null;
+  }
+
+  function updateBulkPreview() {
+    if (selectedBulkFiles.length === 0) {
+      bulkPreviewContainer.style.display = 'none';
+      bulkUploadSubmitBtn.disabled = true;
+      bulkUploadSubmitBtn.innerHTML = '<span>Upload &amp; Link Results</span>';
+      return;
+    }
+
+    bulkPreviewContainer.style.display = 'block';
+    if (bulkUploadResultReport) {
+      bulkUploadResultReport.style.display = 'none';
+      bulkUploadResultReport.innerHTML = '';
+    }
+
+    let matchedCount = 0;
+    let unmatchedCount = 0;
+
+    bulkFilesList.innerHTML = selectedBulkFiles.map((file, index) => {
+      const item = findMatchingItem(file.name);
+      if (item) {
+        matchedCount++;
+        return `
+          <div class="bulk-file-row matched">
+            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 60%;">
+              <strong>📄 ${escapeHtml(file.name)}</strong>
+              <span style="color: #64748b; font-size: 0.76rem; margin-left: 6px;">(${formatBytes(file.size)})</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+              <span class="bulk-badge-matched">✓ #${escapeHtml(item.itemCode)}: ${escapeHtml(item.itemName)}</span>
+              <button type="button" class="btn btn-subtle btn-sm btn-remove-bulk-file" data-index="${index}" style="padding: 2px 6px; font-size: 0.72rem; color: #ef4444;" title="Remove this file">&times;</button>
+            </div>
+          </div>
+        `;
+      } else {
+        unmatchedCount++;
+        return `
+          <div class="bulk-file-row unmatched">
+            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 60%;">
+              <strong>📄 ${escapeHtml(file.name)}</strong>
+              <span style="color: #64748b; font-size: 0.76rem; margin-left: 6px;">(${formatBytes(file.size)})</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+              <span class="bulk-badge-unmatched">⚠️ No matching code</span>
+              <button type="button" class="btn btn-subtle btn-sm btn-remove-bulk-file" data-index="${index}" style="padding: 2px 6px; font-size: 0.72rem; color: #ef4444;" title="Remove this file">&times;</button>
+            </div>
+          </div>
+        `;
+      }
+    }).join('');
+
+    // Attach individual remove file buttons
+    bulkFilesList.querySelectorAll('.btn-remove-bulk-file').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.currentTarget.dataset.index, 10);
+        selectedBulkFiles.splice(idx, 1);
+        updateBulkPreview();
+      });
+    });
+
+    bulkSelectionSummary.innerHTML = `Selected Files (${selectedBulkFiles.length}) &bull; <span style="color: #10b981; font-weight: 700;">${matchedCount} Matched</span>${unmatchedCount > 0 ? `, <span style="color: #ef4444; font-weight: 700;">${unmatchedCount} Unmatched</span>` : ''}`;
+
+    if (matchedCount > 0) {
+      bulkUploadSubmitBtn.disabled = false;
+      bulkUploadSubmitBtn.innerHTML = `<span>Upload &amp; Link ${matchedCount} Result${matchedCount > 1 ? 's' : ''}</span>`;
+    } else {
+      bulkUploadSubmitBtn.disabled = true;
+      bulkUploadSubmitBtn.innerHTML = '<span>No Matching Item Codes Found</span>';
+    }
+  }
+
+  // Handle Bulk Upload Form Submit
+  if (bulkUploadForm) {
+    bulkUploadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (selectedBulkFiles.length === 0) {
+        showToast('Please select at least one PDF file.', 'error');
+        return;
+      }
+
+      const formData = new FormData();
+      selectedBulkFiles.forEach(file => {
+        formData.append('resultPdfs', file);
+      });
+
+      bulkUploadSubmitBtn.disabled = true;
+      bulkUploadSubmitBtn.innerHTML = `<span class="spinner"></span> <span>Uploading &amp; linking ${selectedBulkFiles.length} file(s)...</span>`;
+
+      try {
+        const res = await fetch('/api/admin/bulk-upload', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: formData
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          const s = data.summary;
+          bulkUploadResultReport.style.display = 'block';
+          bulkUploadResultReport.innerHTML = `
+            <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md); padding: 14px; font-size: 0.85rem; color: #065f46;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 6px;">🎉 Bulk Upload Completed!</h4>
+              <p>Successfully matched and linked <strong>${s.matchedCount}</strong> result PDF(s).</p>
+              ${s.unmatchedCount > 0 ? `<p style="color: #b91c1c; margin-top: 4px;">⚠️ <strong>${s.unmatchedCount}</strong> file(s) did not match any item code and were safely skipped.</p>` : ''}
+              <div style="margin-top: 10px; max-height: 140px; overflow-y: auto; background: white; border-radius: var(--radius-sm); padding: 8px; border: 1px solid #d1fae5;">
+                ${s.matched.map(m => `<div style="font-size: 0.8rem; padding: 2px 0;">✓ <strong>#${escapeHtml(m.itemCode)}</strong> - ${escapeHtml(m.itemName)} <span style="color: #64748b;">(${escapeHtml(m.filename)})</span></div>`).join('')}
+              </div>
+            </div>
+          `;
+
+          showToast(`Successfully linked ${s.matchedCount} results!`, 'success');
+          selectedBulkFiles = [];
+          if (bulkPdfFilesInput) bulkPdfFilesInput.value = '';
+          if (bulkPreviewContainer) bulkPreviewContainer.style.display = 'none';
+
+          bulkUploadSubmitBtn.disabled = false;
+          bulkUploadSubmitBtn.innerHTML = '<span>Upload Done! Close</span>';
+          bulkUploadSubmitBtn.onclick = (ev) => {
+            ev.preventDefault();
+            closeBulkUploadModal();
+            bulkUploadSubmitBtn.onclick = null;
+          };
+
+          loadAdminStats();
+          loadAdminItems();
+        } else {
+          showToast(data.error || 'Bulk upload failed.', 'error');
+          bulkUploadSubmitBtn.disabled = false;
+          bulkUploadSubmitBtn.innerHTML = '<span>Upload &amp; Link Results</span>';
+        }
+      } catch (err) {
+        showToast('Error uploading files: ' + err.message, 'error');
+        bulkUploadSubmitBtn.disabled = false;
+        bulkUploadSubmitBtn.innerHTML = '<span>Upload &amp; Link Results</span>';
+      }
+    });
+  }
+
   // --- SETTINGS MODAL ---
   openSettingsBtn.addEventListener('click', () => {
     currPasswordInput.value = '';
@@ -698,6 +980,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') {
       closeItemModal();
       closeUploadModal();
+      closeBulkUploadModal();
       closeSettingsModal();
     }
   });

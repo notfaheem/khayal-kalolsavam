@@ -38,9 +38,15 @@
       "itemNameMl": "പോസ്റ്റർ നിർമ്മാണം",
       "category": "HS Arabic",
       "participants": 1,
-      "hasResult": false,
-      "resultPdf": null,
-      "publishedAt": null
+      "hasResult": true,
+      "resultPdf": {
+        "filename": "bulk_705_poster_nirmanam_1790644288251_10960.pdf",
+        "originalName": "705_poster_nirmanam.pdf",
+        "size": 76,
+        "mimetype": "application/pdf",
+        "url": "/uploads/results/bulk_705_poster_nirmanam_1790644288251_10960.pdf"
+      },
+      "publishedAt": "2026-09-29T01:11:28.299Z"
     },
     {
       "id": "item_706",
@@ -139,13 +145,13 @@
       "participants": 3,
       "hasResult": true,
       "resultPdf": {
-        "filename": "result_601_601_Chithra_Rachana_Pencil_1790609023144.pdf",
-        "originalName": "601_Chithra_Rachana_Pencil.pdf",
-        "size": 76,
+        "filename": "bulk_601_1790644408634_97319.pdf",
+        "originalName": "601.pdf",
+        "size": 984069,
         "mimetype": "application/pdf",
-        "url": "/uploads/results/result_601_601_Chithra_Rachana_Pencil_1790609023144.pdf"
+        "url": "/uploads/results/bulk_601_1790644408634_97319.pdf"
       },
-      "publishedAt": "2026-09-28T15:23:43.162Z"
+      "publishedAt": "2026-09-29T01:13:30.685Z"
     },
     {
       "id": "item_602",
@@ -156,13 +162,13 @@
       "participants": 3,
       "hasResult": true,
       "resultPdf": {
-        "filename": "result_602_KALOLSAVAM_DUTY_2026_1790604071061.pdf",
-        "originalName": "KALOLSAVAM DUTY 2026.pdf",
-        "size": 16720,
+        "filename": "bulk_602_1790644408678_25121.pdf",
+        "originalName": "602.pdf",
+        "size": 985852,
         "mimetype": "application/pdf",
-        "url": "/uploads/results/result_602_KALOLSAVAM_DUTY_2026_1790604071061.pdf"
+        "url": "/uploads/results/bulk_602_1790644408678_25121.pdf"
       },
-      "publishedAt": "2026-09-28T14:01:11.068Z"
+      "publishedAt": "2026-09-29T01:13:30.698Z"
     },
     {
       "id": "item_604",
@@ -171,9 +177,15 @@
       "itemNameMl": "കാർട്ടൂൺ",
       "category": "HS General",
       "participants": 3,
-      "hasResult": false,
-      "resultPdf": null,
-      "publishedAt": null
+      "hasResult": true,
+      "resultPdf": {
+        "filename": "bulk_604_1790644408761_38165.pdf",
+        "originalName": "604.pdf",
+        "size": 983634,
+        "mimetype": "application/pdf",
+        "url": "/uploads/results/bulk_604_1790644408761_38165.pdf"
+      },
+      "publishedAt": "2026-09-29T01:13:30.700Z"
     },
     {
       "id": "item_610",
@@ -182,9 +194,15 @@
       "itemNameMl": "ലളിതഗാനം (പെൺ)",
       "category": "HS General",
       "participants": 3,
-      "hasResult": false,
-      "resultPdf": null,
-      "publishedAt": null
+      "hasResult": true,
+      "resultPdf": {
+        "filename": "bulk_610_1790644408828_96250.pdf",
+        "originalName": "610.pdf",
+        "size": 982892,
+        "mimetype": "application/pdf",
+        "url": "/uploads/results/bulk_610_1790644408828_96250.pdf"
+      },
+      "publishedAt": "2026-09-29T01:13:30.702Z"
     },
     {
       "id": "item_612",
@@ -204,9 +222,15 @@
       "itemNameMl": "നാടോടി നൃത്തം (പെൺ)",
       "category": "HS General",
       "participants": 3,
-      "hasResult": false,
-      "resultPdf": null,
-      "publishedAt": null
+      "hasResult": true,
+      "resultPdf": {
+        "filename": "bulk_628_1790644408895_12484.pdf",
+        "originalName": "628.pdf",
+        "size": 986065,
+        "mimetype": "application/pdf",
+        "url": "/uploads/results/bulk_628_1790644408895_12484.pdf"
+      },
+      "publishedAt": "2026-09-29T01:13:30.716Z"
     },
     {
       "id": "item_631",
@@ -226,9 +250,15 @@
       "itemNameMl": "പ്രസംഗം - മലയാളം",
       "category": "HS General",
       "participants": 1,
-      "hasResult": false,
-      "resultPdf": null,
-      "publishedAt": null
+      "hasResult": true,
+      "resultPdf": {
+        "filename": "bulk_636_1790644408981_90225.pdf",
+        "originalName": "636.pdf",
+        "size": 973980,
+        "mimetype": "application/pdf",
+        "url": "/uploads/results/bulk_636_1790644408981_90225.pdf"
+      },
+      "publishedAt": "2026-09-29T01:13:30.721Z"
     },
     {
       "id": "item_640",

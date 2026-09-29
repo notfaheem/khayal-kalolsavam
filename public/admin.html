@@ -122,10 +122,14 @@
     <!-- Admin Action Toolbar -->
     <div style="background: white; border-radius: var(--radius-lg); padding: 1rem 1.25rem; border: 1px solid var(--border); margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 12px;">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
-        <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
           <button id="open-add-item-modal-btn" class="btn btn-primary btn-sm">
             <span>➕</span>
             <span>Add New Item</span>
+          </button>
+          <button id="open-bulk-upload-modal-btn" class="btn btn-outline btn-sm" style="border-color: #0284c7; color: #0369a1; background: #f0f9ff;">
+            <span>📁</span>
+            <span>Bulk Upload PDFs</span>
           </button>
           <button id="open-settings-modal-btn" class="btn btn-outline btn-sm">
             <span>⚙️</span>
@@ -280,6 +284,56 @@
           <button type="button" class="btn btn-outline btn-sm" id="upload-modal-cancel-btn">Cancel</button>
           <button type="submit" class="btn btn-success btn-sm" id="upload-submit-btn">
             <span>Upload &amp; Publish</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: BULK UPLOAD RESULT PDFS -->
+  <div class="modal-overlay" id="bulk-upload-modal">
+    <div class="modal-dialog" style="max-width: 680px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>📁 Bulk Upload Result PDFs</h3>
+          <p>Name each PDF as the Item Code (e.g. 601.pdf, 703.pdf)</p>
+        </div>
+        <button class="modal-close-btn" id="bulk-upload-modal-close-btn">&times;</button>
+      </div>
+
+      <form id="bulk-upload-form">
+        <div class="modal-body">
+          <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 14px; border-radius: var(--radius-sm); margin-bottom: 16px; font-size: 0.84rem; color: #1e40af; line-height: 1.5;">
+            <strong>💡 How it works:</strong> Ensure your PDF filenames correspond to their Item Codes (e.g. <code>601.pdf</code>, <code>703.pdf</code>, or <code>601_pencil.pdf</code>). You can drop all results at once and each PDF will automatically link to its matching item!
+          </div>
+
+          <div class="file-dropzone" id="bulk-file-dropzone" style="padding: 28px 16px;">
+            <div class="dropzone-icon">📁</div>
+            <p style="font-weight: 700; color: #0f172a; margin-bottom: 4px;">Click to select multiple PDFs or drag &amp; drop</p>
+            <p style="font-size: 0.8rem; color: #64748b;">Select any number of PDF files (.pdf) up to 30MB each</p>
+            <input type="file" id="bulk-pdf-files-input" accept="application/pdf" multiple style="display: none;">
+          </div>
+
+          <!-- Live matching preview of selected files -->
+          <div id="bulk-preview-container" style="display: none; margin-top: 16px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <span style="font-size: 0.88rem; font-weight: 700; color: #0f172a;" id="bulk-selection-summary">Selected Files (0)</span>
+              <button type="button" id="bulk-clear-files-btn" class="btn btn-subtle btn-sm" style="padding: 3px 10px; font-size: 0.75rem;">Clear All</button>
+            </div>
+            
+            <div id="bulk-files-list" class="bulk-files-scroll-list">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Bulk upload progress & result report container -->
+          <div id="bulk-upload-result-report" style="display: none; margin-top: 16px;"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" id="bulk-upload-modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="bulk-upload-submit-btn" disabled>
+            <span>Upload &amp; Link Results</span>
           </button>
         </div>
       </form>

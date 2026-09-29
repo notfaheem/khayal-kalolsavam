@@ -75,6 +75,60 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
+// Bulk Multer Storage Configuration
+const bulkStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const timestamp = Date.now();
+    const rand = Math.floor(Math.random() * 100000);
+    const safeOriginal = path.parse(file.originalname).name.replace(/[^a-zA-Z0-9_-]/g, '_');
+    cb(null, `bulk_${safeOriginal}_${timestamp}_${rand}.pdf`);
+  }
+});
+
+const bulkUpload = multer({
+  storage: bulkStorage,
+  limits: { fileSize: 30 * 1024 * 1024, files: 100 },
+  fileFilter: fileFilter
+});
+
+// Helper to reliably extract item code from filename
+function extractItemCodeFromFilename(originalname) {
+  if (!originalname) return null;
+  const base = path.parse(originalname).name.trim();
+
+  // 1. Exact match with an item code (e.g. "601" or "703")
+  if (db.getItemByCode(base)) {
+    return base;
+  }
+
+  // 2. Starts with digits (e.g. "601_Chithra", "601-pencil", "601 pencil")
+  const leadingDigits = base.match(/^(\d+)/);
+  if (leadingDigits && db.getItemByCode(leadingDigits[1])) {
+    return leadingDigits[1];
+  }
+
+  // 3. Contains pattern like "item_601", "code601", "#601"
+  const prefixMatch = base.match(/(?:item|code|#)[_\-\s]*(\d+)/i);
+  if (prefixMatch && db.getItemByCode(prefixMatch[1])) {
+    return prefixMatch[1];
+  }
+
+  // 4. Any standalone digit group matching an existing item code
+  const allNumbers = base.match(/\d+/g);
+  if (allNumbers) {
+    for (const num of allNumbers) {
+      if (db.getItemByCode(num)) {
+        return num;
+      }
+    }
+  }
+
+  return null;
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -269,6 +323,76 @@ app.post('/api/admin/items/:id/upload', requireAdmin, (req, res) => {
       success: true,
       message: `Result for "${updatedItem.itemName}" published successfully!`,
       data: updatedItem
+    });
+  });
+});
+
+// Bulk upload result PDFs mapped by item code in filename
+app.post('/api/admin/bulk-upload', requireAdmin, (req, res) => {
+  bulkUpload.array('resultPdfs', 100)(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(400).json({ success: false, error: `Upload error: ${err.message}` });
+    } else if (err) {
+      return res.status(400).json({ success: false, error: err.message });
+    }
+
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ success: false, error: 'No PDF files were uploaded.' });
+    }
+
+    const matched = [];
+    const unmatched = [];
+
+    for (const file of req.files) {
+      const code = extractItemCodeFromFilename(file.originalname);
+      const item = code ? db.getItemByCode(code) : null;
+
+      if (item) {
+        // If item already had an older PDF, remove old file from disk
+        if (item.resultPdf && item.resultPdf.filename && item.resultPdf.filename !== file.filename) {
+          const oldFilePath = path.join(uploadDir, item.resultPdf.filename);
+          if (fs.existsSync(oldFilePath)) {
+            try { fs.unlinkSync(oldFilePath); } catch (e) { console.error('Error removing old PDF:', e); }
+          }
+        }
+
+        const updated = db.attachResult(item.id, file);
+        matched.push({
+          itemCode: item.itemCode,
+          itemName: item.itemName,
+          category: item.category,
+          filename: file.originalname,
+          url: updated.resultPdf.url
+        });
+      } else {
+        // Clean up unmatched file from disk
+        const unneededPath = path.join(uploadDir, file.filename);
+        if (fs.existsSync(unneededPath)) {
+          try { fs.unlinkSync(unneededPath); } catch (e) { console.error('Error cleaning unmatched file:', e); }
+        }
+
+        unmatched.push({
+          filename: file.originalname,
+          reason: 'No matching item code found'
+        });
+      }
+    }
+
+    const message = matched.length > 0 
+      ? `Successfully linked ${matched.length} result(s).${unmatched.length > 0 ? ` (${unmatched.length} unmatched file(s) skipped)` : ''}`
+      : `No files matched any item codes.`;
+
+    res.json({
+      success: matched.length > 0,
+      message,
+      summary: {
+        totalFiles: req.files.length,
+        matchedCount: matched.length,
+        unmatchedCount: unmatched.length,
+        matched,
+        unmatched
+      },
+      stats: db.getStats()
     });
   });
 });
