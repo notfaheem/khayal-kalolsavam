@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>ഖയാൽ 2K26 | GHSS ERANHIMANGAD School Kalolsavam Results</title>
+  <meta name="description" content="Official Kalolsavam result publishing portal of GHSS ERANHIMANGAD - KHAYAL 2K26. View and download item-wise results for HS General and HS Arabic.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="theme-color" content="#f59e0b">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="#" class="brand-wrapper">
+        <img src="assets/poster.jpg" alt="GHSS Logo" class="school-crest">
+        <div class="brand-text">
+          <h1>GHSS ERANHIMANGAD <span class="fest-badge-pill">ഖയാൽ 2K26</span></h1>
+          <p class="font-ml">കേരള സ്കൂൾ കലോത്സവം 2026-27</p>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge-top">
+          <span>🎨</span>
+          <span>GHSS ERANHIMANGAD • SCHOOL KALOLSAVAM 2026-27</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="fest-malayalam">ഖയാൽ</span>
+          <span style="color: #0f172a;"> 2K26</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Welcome to the official results publishing portal. Select any event category below to view and download real-time result sheets for HS General &amp; HS Arabic.
+        </p>
+
+        <div class="hero-meta-strip">
+          <div class="meta-chip">
+            <span>📅</span>
+            <span class="font-ml">സെപ്തംബർ 28, 29 (തിങ്കൾ, ചൊവ്വ)</span>
+          </div>
+          <div class="meta-chip">
+            <span>🏛️</span>
+            <span>GHSS Eranhimangad Campus</span>
+          </div>
+          <div class="meta-chip">
+            <span>⚡</span>
+            <span>Official Results</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Poster Preview Card -->
+      <div class="hero-visual">
+        <div class="poster-card" id="poster-preview-trigger" title="Click to view full poster" style="cursor: pointer;">
+          <img src="assets/poster.jpg" alt="ഖയാൽ 2K26 Festival Poster" class="poster-img">
+          <div class="poster-overlay">
+            <span>ഖയാൽ 2K26 Poster</span>
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 9999px;">🔍 Zoom</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section class="container stats-banner">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon total">📋</div>
+        <div>
+          <div class="stat-val" id="stat-total">38</div>
+          <div class="stat-lbl">Total Items</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon published">✅</div>
+        <div>
+          <div class="stat-val" id="stat-published" style="color: #10b981;">0</div>
+          <div class="stat-lbl">Results Published</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon pending">⏳</div>
+        <div>
+          <div class="stat-val" id="stat-pending" style="color: #f59e0b;">38</div>
+          <div class="stat-lbl">Results Awaiting</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon rate">📊</div>
+        <div>
+          <div class="stat-val" id="stat-rate">0%</div>
+          <div class="stat-lbl">Completed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY FILTER & SEARCH TOOLBAR -->
+  <section class="toolbar-section">
+    <div class="container toolbar-container">
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-category="all">
+          <span>All Items</span>
+          <span class="tab-counter" id="badge-all">38</span>
+        </button>
+        <button class="tab-btn" data-category="HS General">
+          <span>🎭 HS General</span>
+          <span class="tab-counter" id="badge-general">27</span>
+        </button>
+        <button class="tab-btn" data-category="HS Arabic">
+          <span>🌙 HS Arabic</span>
+          <span class="tab-counter" id="badge-arabic">11</span>
+        </button>
+        <button class="tab-btn" data-category="published">
+          <span>🏆 Published</span>
+          <span class="tab-counter" id="badge-published" style="background: rgba(16, 185, 129, 0.2); color: #065f46;">0</span>
+        </button>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="search-wrapper">
+        <span class="search-icon-left">🔍</span>
+        <input 
+          type="text" 
+          id="search-input" 
+          class="search-input" 
+          placeholder="Search by code or item (e.g. 601, Oppana, ഒപ്പന)..."
+          autocomplete="off"
+        >
+        <button id="clear-search-btn" class="search-clear-btn" title="Clear search">&times;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ITEMS GRID SECTION -->
+  <main class="container items-section">
+    <div class="items-header">
+      <span class="items-count-indicator" id="items-count-display">Loading items...</span>
+    </div>
+
+    <div class="items-grid" id="items-grid">
+      <!-- Dynamically generated from kalolsavamItems list below -->
+    </div>
+  </main>
+
+  <!-- PDF VIEWER MODAL -->
+  <div class="modal-overlay" id="pdf-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="pdf-modal-title">Item Result</h3>
+          <p id="pdf-modal-meta">GHSS ERANHIMANGAD • KHAYAL 2K26</p>
+        </div>
+        <button class="modal-close-btn" id="pdf-close-btn" title="Close viewer">&times;</button>
+      </div>
+
+      <div class="modal-body modal-body-pdf">
+        <div id="mobile-pdf-hint" style="display: none; background: #fffbeb; color: #92400e; padding: 8px 14px; font-size: 0.8rem; text-align: center; border-bottom: 1px solid #fde68a;">
+          📱 Viewing on mobile? Tap <strong>"Open in Google Drive / New Tab"</strong> to view the full PDF.
+        </div>
+        <iframe id="pdf-modal-frame" class="pdf-iframe" src="" title="Result PDF Preview" allow="autoplay"></iframe>
+      </div>
+
+      <div class="modal-footer">
+        <a id="pdf-open-tab-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+          <span>↗️</span>
+          <span>Open in Google Drive / New Tab</span>
+        </a>
+        <button type="button" class="btn btn-outline btn-sm" id="pdf-modal-close-action">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POSTER FULL VIEW MODAL -->
+  <div class="modal-overlay" id="poster-modal">
+    <div class="modal-dialog modal-sm" style="max-width: 500px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>ഖയാൽ 2K26 Poster</h3>
+          <p>GHSS ERANHIMANGAD</p>
+        </div>
+        <button class="modal-close-btn" id="poster-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 0; background: #000; text-align: center;">
+        <img src="assets/poster.jpg" alt="Kalolsavam Poster" style="width: 100%; height: auto; max-height: 80vh; object-fit: contain; display: block;">
+      </div>
+      <div class="modal-footer">
+        <a href="assets/poster.jpg" download="Khayal_2K26_Poster.jpg" class="btn btn-primary btn-sm">
+          <span>⬇️</span>
+          <span>Download Poster</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <p style="font-weight: 700; color: #0f172a;">GHSS ERANHIMANGAD</p>
+        <p class="font-ml" style="font-size: 0.8rem; margin-top: 2px;">
+          വിദ്യാലയമാണ് ജീവനിലേക്കുള്ള വെളിച്ചം • Since 1974 • മലപ്പുറം ജില്ല
+        </p>
+      </div>
+      <div>
+        <p>© 2026-27 ഖയാൽ Kalolsavam Committee</p>
+        <p style="font-size: 0.82rem; margin-top: 4px; color: #475569;">
+          Created by <a href="https://github.com/notfaheem" target="_blank" rel="noopener noreferrer" style="color: #0f172a; font-weight: 700; text-decoration: underline;">Faheem P Faisal</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!--
+  =============================================================================
+  🏆 KHAYAL 2K26 - GOOGLE DRIVE RESULT LINKS CONFIGURATION
+  =============================================================================
+  📌 HOW TO ADD RESULTS:
+  1. Upload your result PDF file to your Google Drive.
+  2. In Google Drive, right-click the file -> "Share" -> change General access to
+     "Anyone with the link can view". Copy the link.
+  3. Find the matching item below by its code (e.g. 703, 601, 670).
+  4. Paste the Google Drive link into `driveLink: "PASTE_HERE"`.
+  5. Leave `driveLink: ""` empty for items whose results are still pending!
+  6. Save this file. That's all! The site updates automatically.
+  =============================================================================
+  -->
+  <script>
+    const kalolsavamItems = [
+      // -------------------------------------------------------------
+      // 🌙 HS ARABIC (11 Items)
+      // -------------------------------------------------------------
+      {
+        code: "703",
+        name: "Caption Rachana",
+        nameMl: "ക്യാപ്ഷൻ രചന",
+        category: "HS Arabic",
+        participants: 1,
+        driveLink: "" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "704",
+        name: "Tharjama ( Arabic)",
+        nameMl: "തർജമ (അറബിക്)",
+        category: "HS Arabic",
+        participants: 2,
+        driveLink: "" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "705",
+        name: "Poster Nirmanam",
+        nameMl: "പോസ്റ്റർ നിർമ്മാണം",
+        category: "HS Arabic",
+        participants: 1,
+        driveLink: "" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "706",
+        name: "Padyam Chollal (Boys)",
+        nameMl: "പദ്യം ചൊല്ലൽ (ആൺ)",
+        category: "HS Arabic",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1rt9UbBDaOTVCKL7VkVKfgSUbpDsEgoLM/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "707",
+        name: "Padyam Chollal(Girls)",
+        nameMl: "പദ്യം ചൊല്ലൽ (പെൺ)",
+        category: "HS Arabic",
+        participants: 2,
+        driveLink: "https://drive.google.com/file/d/1Dr17_dUQnNr09xNHMg9ORGIBc6TRJ2Lx/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "708",
+        name: "Arabi Ganam (Boys)",
+        nameMl: "അറബി ഗാനം (ആൺ)",
+        category: "HS Arabic",
+        participants: 1,
+        driveLink: "" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "709",
+        name: "Arabi Ganam (Girls)",
+        nameMl: "അറബി ഗാനം (പെൺ)",
+        category: "HS Arabic",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1bnMEeOmY9WbdEamNLcXKwCpouE2zV4dO/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "711",
+        name: "Mono Act",
+        nameMl: "മോണോ ആക്ട്",
+        category: "HS Arabic",
+        participants: 1,
+        driveLink: "" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "713",
+        name: "Quran Parayanam",
+        nameMl: "ഖുർആൻ പാരായണം",
+        category: "HS Arabic",
+        participants: 5,
+        driveLink: "" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "716",
+        name: "Nikhandu Nirmanam",
+        nameMl: "നിഘണ്ടു നിർമ്മാണം",
+        category: "HS Arabic",
+        participants: 1,
+        driveLink: "" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "718",
+        name: "Sangha Ganam",
+        nameMl: "സംഘഗാനം",
+        category: "HS Arabic",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1zzwuD5-U4qpO5kvCvUw9Vh9DS26brNoZ/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+
+      // -------------------------------------------------------------
+      // 🎭 HS GENERAL (27 Items)
+      // -------------------------------------------------------------
+      {
+        code: "601",
+        name: "Chithra Rachana - Pencil",
+        nameMl: "ചിത്രരചന - പെൻസിൽ",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1ks_Q-xpwIerdQpwFRroZA6FaMNi4PgLe/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "602",
+        name: "Chithra Rachana - Water Colour",
+        nameMl: "ചിത്രരചന - ജലച്ചായം",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1T2PhVmZvnbTVdH0tKaXG4DctrcMeXYsq/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "604",
+        name: "Cartoon",
+        nameMl: "കാർട്ടൂൺ",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/16KfHHdR_OxUYEF1njKniMln8Rj04hogz/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "610",
+        name: "Lalithaganam (Girls)",
+        nameMl: "ലളിതഗാനം (പെൺ)",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1w0z4gL-eTCH4TamkLxaEhhQnsssLjdLj/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "612",
+        name: "Mappilappattu (Girls)",
+        nameMl: "മാപ്പിളപ്പാട്ട് (പെൺ)",
+        category: "HS General",
+        participants: 5,
+        driveLink: "https://drive.google.com/file/d/1cpvQpWNgSMXVlNEpRooFwbrzHq8olq3a/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "628",
+        name: "Nadodi Nrutham(Girls)",
+        nameMl: "നാടോടി നൃത്തം (പെൺ)",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1J-xkvfhQzqBm7MOpl1-nMm_EvnfjcR3Q/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "631",
+        name: "Bharathanatyam (Girls)",
+        nameMl: "ഭരതനാട്യം (പെൺ)",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1pHsbVrb5Bv9TcIuv9bBhtE6eOY3y-HeC/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "636",
+        name: "Prasangam - Malayalam",
+        nameMl: "പ്രസംഗം - മലയാളം",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1RlTHxnpye9K3ggIjNsmfMH_8KCV2BYIC/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "640",
+        name: "Katharachana - Malayalam",
+        nameMl: "കഥാരചന - മലയാളം",
+        category: "HS General",
+        participants: 4,
+        driveLink: "https://drive.google.com/file/d/119HtkYYbljNLy8LDTItPQppzbrvJAasT/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "643",
+        name: "Upanyasam - Malayalam",
+        nameMl: "ഉപന്യാസം - മലയാളം",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1bs2CWglcZYGibfDI5rIOsjHNtvU1hfkZ/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "644",
+        name: "Upanyasam - English",
+        nameMl: "ഉപന്യാസം - ഇംഗ്ലീഷ്",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1EYkzjTyUiobyyHNgLkoQRTWJxJa94vMz/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "649",
+        name: "Padyam Chollal - Malayalam",
+        nameMl: "പദ്യം ചൊല്ലൽ - മലയാളം",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1G9IwqZeHux6AJJtFlLguxz9OYlhNHMmj/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "650",
+        name: "Padyam Chollal - English",
+        nameMl: "പദ്യം ചൊല്ലൽ - ഇംഗ്ലീഷ്",
+        category: "HS General",
+        participants: 2,
+        driveLink: "https://drive.google.com/file/d/1zkHiG0gIUxL4LT6cGk1YsskAF1QGK_Zd/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "651",
+        name: "Padyam Chollal - Hindi",
+        nameMl: "പദ്യം ചൊല്ലൽ - ഹിന്ദി",
+        category: "HS General",
+        participants: 1,
+        driveLink: "" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "653",
+        name: "Padyam Chollal - Urdu",
+        nameMl: "പദ്യം ചൊല്ലൽ - ഉറുദു",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1ZqTAcW4sD5IBkp0RxeiELS7UvMvRG7y7/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "654",
+        name: "Padyam Chollal - Tamil",
+        nameMl: "പദ്യം ചൊല്ലൽ - തമിഴ്",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1fB4ivZYTMXtmdIEtgnlE_y3BprPvjnX_/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "667",
+        name: "Dafmuttu (Boys)",
+        nameMl: "ദഫ്മുട്ട് (ആൺ)",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1U9brFqIS9qBlIrrVIYpwoi5oKXaHoVE3/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "668",
+        name: "Margamkali (Girls)",
+        nameMl: "മാർഗ്ഗംകളി (പെൺ)",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1GAptEjPvwd1hREmVWsSLnsGBsjbsAiA4/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "669",
+        name: "Thiruvathirakali (Girls)",
+        nameMl: "തിരുവാതിരക്കളി (പെൺ)",
+        category: "HS General",
+        participants: 2,
+        driveLink: "https://drive.google.com/file/d/1t5q7LSW1SlcXSFUQFGLHLNRsyiTT1_SP/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "670",
+        name: "Oppana (Girls)",
+        nameMl: "ഒപ്പന (പെൺ)",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1odIu1Et5F8IcnzDTDNAySk-_xXCZzO8c/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "687",
+        name: "Vanchipattu",
+        nameMl: "വഞ്ചിപ്പാട്ട്",
+        category: "HS General",
+        participants: 2,
+        driveLink: "https://drive.google.com/file/d/1mHs0HUBqBo_KHOLU3_uuT1bHOYpecK8r/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "688",
+        name: "Nadanpattu",
+        nameMl: "നാടൻപാട്ട്",
+        category: "HS General",
+        participants: 2,
+        driveLink: "https://drive.google.com/file/d/1QRgMNEkvw1hHMSY0QXcM-B5-7-SqHpB-/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "689",
+        name: "Groupsong Urdu",
+        nameMl: "ഗ്രൂപ്പ് സോംഗ് (ഉറുദു)",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1ABSAibkA5fWnGyX_n22y-C1tdXQR6CgU/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "692",
+        name: "Kavitharachana-English",
+        nameMl: "കവിതാരചന - ഇംഗ്ലീഷ്",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1U4OkVeU1uxMYas6w2Fs00zT3gCKHiGUi/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "695",
+        name: "Katha Rachana - English",
+        nameMl: "കഥാരചന - ഇംഗ്ലീഷ്",
+        category: "HS General",
+        participants: 3,
+        driveLink: "https://drive.google.com/file/d/1gfePuFNTx7SAJj65YkKkLHLWukOhK4En/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "697",
+        name: "Group Song",
+        nameMl: "സംഘഗാനം",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1BYBPVEkyUJMrjU0xYS7vz2ledxM6iwPh/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      },
+      {
+        code: "1017",
+        name: "Paliya Nirtham",
+        nameMl: "പാലിയ നൃത്തം",
+        category: "HS General",
+        participants: 1,
+        driveLink: "https://drive.google.com/file/d/1UI82xvWaYOKmmgokmR6b8669rlmq_S6f/view?usp=sharing" // <-- PASTE GOOGLE DRIVE LINK HERE
+      }
+    ];
+
+    // =============================================================
+    // CLIENT-SIDE APPLICATION LOGIC (PURE JAVASCRIPT, NO SERVER)
+    // =============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentCategory = 'all';
+      let currentSearchQuery = '';
+
+      // Elements
+      const itemsContainer = document.getElementById('items-grid');
+      const itemsCountText = document.getElementById('items-count-display');
+      const searchInput = document.getElementById('search-input');
+      const clearSearchBtn = document.getElementById('clear-search-btn');
+      const filterTabs = document.querySelectorAll('.tab-btn');
+
+      // Stats Elements
+      const statTotal = document.getElementById('stat-total');
+      const statPublished = document.getElementById('stat-published');
+      const statPending = document.getElementById('stat-pending');
+      const statRate = document.getElementById('stat-rate');
+      const tabBadgeAll = document.getElementById('badge-all');
+      const tabBadgeGeneral = document.getElementById('badge-general');
+      const tabBadgeArabic = document.getElementById('badge-arabic');
+      const tabBadgePublished = document.getElementById('badge-published');
+
+      // PDF Modal Elements
+      const pdfModal = document.getElementById('pdf-modal');
+      const pdfModalTitle = document.getElementById('pdf-modal-title');
+      const pdfModalMeta = document.getElementById('pdf-modal-meta');
+      const pdfModalFrame = document.getElementById('pdf-modal-frame');
+      const pdfOpenTabBtn = document.getElementById('pdf-open-tab-btn');
+      const pdfCloseBtn = document.getElementById('pdf-close-btn');
+      const pdfModalCloseAction = document.getElementById('pdf-modal-close-action');
+
+      // Poster Modal Elements
+      const posterModal = document.getElementById('poster-modal');
+      const posterPreviewTrigger = document.getElementById('poster-preview-trigger');
+      const posterCloseBtn = document.getElementById('poster-close-btn');
+
+      // Update statistics
+      function calculateStats() {
+        const total = kalolsavamItems.length;
+        const published = kalolsavamItems.filter(i => Boolean(i.driveLink && i.driveLink.trim())).length;
+        const pending = total - published;
+        const generalTotal = kalolsavamItems.filter(i => i.category === 'HS General').length;
+        const arabicTotal = kalolsavamItems.filter(i => i.category === 'HS Arabic').length;
+        const rate = total > 0 ? Math.round((published / total) * 100) : 0;
+
+        statTotal.textContent = total;
+        statPublished.textContent = published;
+        statPending.textContent = pending;
+        statRate.textContent = `${rate}%`;
+
+        tabBadgeAll.textContent = total;
+        tabBadgeGeneral.textContent = generalTotal;
+        tabBadgeArabic.textContent = arabicTotal;
+        tabBadgePublished.textContent = published;
+      }
+
+      // Convert Google Drive view link to embeddable preview link
+      function getEmbeddableDriveUrl(rawUrl) {
+        if (!rawUrl) return '';
+        const url = rawUrl.trim();
+
+        // Check if it's a standard Google Drive link
+        // e.g. https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+        const fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (fileIdMatch && fileIdMatch[1]) {
+          return `https://drive.google.com/file/d/${fileIdMatch[1]}/preview`;
+        }
+
+        // Check for id query param e.g. drive.google.com/open?id=FILE_ID
+        const idParamMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (idParamMatch && idParamMatch[1]) {
+          return `https://drive.google.com/file/d/${idParamMatch[1]}/preview`;
+        }
+
+        // Direct PDF or other link
+        return url;
+      }
+
+      // Render cards
+      function renderItems() {
+        let filtered = [...kalolsavamItems];
+
+        // Category filter
+        if (currentCategory === 'HS General') {
+          filtered = filtered.filter(i => i.category === 'HS General');
+        } else if (currentCategory === 'HS Arabic') {
+          filtered = filtered.filter(i => i.category === 'HS Arabic');
+        } else if (currentCategory === 'published') {
+          filtered = filtered.filter(i => Boolean(i.driveLink && i.driveLink.trim()));
+        }
+
+        // Search query filter
+        if (currentSearchQuery) {
+          filtered = filtered.filter(i => {
+            const code = String(i.code || '').toLowerCase();
+            const en = String(i.name || '').toLowerCase();
+            const ml = String(i.nameMl || '');
+            return code.includes(currentSearchQuery) || en.includes(currentSearchQuery) || ml.includes(currentSearchQuery);
+          });
+        }
+
+        itemsCountText.textContent = `Showing ${filtered.length} item${filtered.length === 1 ? '' : 's'}`;
+
+        if (filtered.length === 0) {
+          itemsContainer.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">🔍</div>
+              <h3>No items found</h3>
+              <p>No results match your search "${escapeHtml(currentSearchQuery)}".</p>
+            </div>
+          `;
+          return;
+        }
+
+        itemsContainer.innerHTML = filtered.map(item => {
+          const isArabic = item.category === 'HS Arabic';
+          const hasResult = Boolean(item.driveLink && item.driveLink.trim());
+          const catClass = isArabic ? 'arabic' : 'general';
+          const catLabel = isArabic ? 'HS Arabic' : 'HS General';
+
+          return `
+            <div class="item-card ${hasResult ? 'has-result' : ''} ${isArabic ? 'is-arabic' : ''}">
+              <div>
+                <div class="item-card-top">
+                  <span class="item-code-badge">#${escapeHtml(item.code)}</span>
+                  <span class="item-category-pill ${catClass}">${catLabel}</span>
+                </div>
+                
+                <div class="item-body" style="margin-top: 10px;">
+                  <h3 class="item-name-en">${escapeHtml(item.name)}</h3>
+                  ${item.nameMl ? `<span class="item-name-ml font-ml">${escapeHtml(item.nameMl)}</span>` : ''}
+                  
+                  <div class="item-participants-info">
+                    <span>👥</span>
+                    <span>${item.participants} Participant${item.participants > 1 ? 's' : ''}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item-footer">
+                <div>
+                  ${hasResult ? `
+                    <div class="result-status-tag published">
+                      <span>✓</span> Result Published
+                    </div>
+                  ` : `
+                    <div class="result-status-tag pending">
+                      <span>⏳</span> Result Awaiting
+                    </div>
+                  `}
+                </div>
+
+                ${hasResult ? `
+                  <div class="action-buttons-row">
+                    <button class="btn btn-view-pdf btn-sm" data-code="${item.code}" title="View Result">
+                      <span>👁️</span> View Result
+                    </button>
+                    <a href="${escapeHtml(item.driveLink)}" target="_blank" rel="noopener noreferrer" class="btn btn-download-pdf btn-sm" title="Open Google Drive Link in New Tab">
+                      <span>↗️</span>
+                    </a>
+                  </div>
+                ` : `
+                  <p style="font-size: 0.76rem; color: #94a3b8; font-style: italic;">
+                    Result will be available soon after judging.
+                  </p>
+                `}
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Attach View Result button events
+        itemsContainer.querySelectorAll('.btn-view-pdf').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const code = e.currentTarget.dataset.code;
+            const item = kalolsavamItems.find(i => String(i.code) === String(code));
+            if (item && item.driveLink) {
+              openPdfModal(item);
+            }
+          });
+        });
+      }
+
+      // Open PDF Modal
+      function openPdfModal(item) {
+        pdfModalTitle.textContent = `#${item.code} - ${item.name}`;
+        pdfModalMeta.textContent = `${item.category} • ${item.participants} Participants • Result Sheet`;
+
+        const embedUrl = getEmbeddableDriveUrl(item.driveLink);
+        pdfModalFrame.src = embedUrl;
+        pdfOpenTabBtn.href = item.driveLink;
+
+        // Mobile hint
+        const mobileHint = document.getElementById('mobile-pdf-hint');
+        if (mobileHint) {
+          mobileHint.style.display = (window.innerWidth <= 768 || 'ontouchstart' in window) ? 'block' : 'none';
+        }
+
+        pdfModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closePdfModal() {
+        pdfModal.classList.remove('active');
+        pdfModalFrame.src = '';
+        document.body.style.overflow = '';
+      }
+
+      pdfCloseBtn.addEventListener('click', closePdfModal);
+      if (pdfModalCloseAction) pdfModalCloseAction.addEventListener('click', closePdfModal);
+      pdfModal.addEventListener('click', (e) => {
+        if (e.target === pdfModal) closePdfModal();
+      });
+
+      // Poster zoom modal
+      if (posterPreviewTrigger && posterModal) {
+        posterPreviewTrigger.addEventListener('click', () => {
+          posterModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      }
+
+      if (posterCloseBtn && posterModal) {
+        posterCloseBtn.addEventListener('click', () => {
+          posterModal.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+        posterModal.addEventListener('click', (e) => {
+          if (e.target === posterModal) {
+            posterModal.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Search input
+      searchInput.addEventListener('input', (e) => {
+        currentSearchQuery = e.target.value.trim().toLowerCase();
+        clearSearchBtn.style.display = currentSearchQuery.length > 0 ? 'block' : 'none';
+        renderItems();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        currentSearchQuery = '';
+        clearSearchBtn.style.display = 'none';
+        searchInput.focus();
+        renderItems();
+      });
+
+      // Filter tabs
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentCategory = tab.dataset.category;
+          renderItems();
+        });
+      });
+
+      // Keyboard Esc to close modal
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (pdfModal.classList.contains('active')) closePdfModal();
+          if (posterModal && posterModal.classList.contains('active')) {
+            posterModal.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        }
+      });
+
+      function escapeHtml(text) {
+        if (!text) return '';
+        const map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        };
+        return String(text).replace(/[&<>"']/g, m => map[m]);
+      }
+
+      // Initialize
+      calculateStats();
+      renderItems();
+    });
+  </script>
+</body>
+</html>

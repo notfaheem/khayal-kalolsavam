@@ -1,20 +1,12 @@
 {
   "name": "khayal",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "GHSS ERANHIMANGAD - KHAYAL 2K26 Kalolsavam Results Portal (Static Frontend)",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "start": "python -m http.server 3000",
+    "serve": "python -m http.server 3000"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "cors": "^2.8.6",
-    "dotenv": "^18.0.4",
-    "express": "^5.2.1",
-    "multer": "^2.4.0"
-  }
+  "author": "Faheem P Faisal",
+  "license": "ISC"
 }
